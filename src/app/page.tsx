@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import fetchData from "../utils/service/dataFetching"; // Adjust the path accordingly
 import { RootState } from "@/Redux/store";
 import ProviderList from "./components/ProviderList";
+import ActivityNumber from "./components/ActivityNumber";
 /**
  *  Home page
  * @description This is the home page of the app where the data is fetched and displayed
@@ -21,14 +22,18 @@ const Home: React.FC = () => {
 
   return (
     <React.Fragment>
-      <h1>Dashboard</h1>
-      <span>
-        Test realized for{" "}
-        <a className="text-tertiary" href="modeo.ai">
-          Modeo.ai
-        </a>
-      </span>
-      {dataProviders.loading && <ProviderList />}
+      <header className="flex flex-col w-full items-center p-5">
+        <h1 className="text-2xl font-bold mb-1">Dashboard</h1>
+        <span>
+          Test realized for{" "}
+          <a className="text-tertiary font-bold" href="modeo.ai">
+            Modeo.ai
+          </a>
+        </span>
+      </header>
+
+       <ProviderList />
+       <ActivityNumber />
     </React.Fragment>
   );
 };

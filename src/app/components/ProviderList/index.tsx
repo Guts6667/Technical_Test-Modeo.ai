@@ -11,10 +11,11 @@ const ProviderList: React.FC = () => {
 
   console.log("Here's the current state of the store: ", dataProviders);
   return (
-    <div>
-      <ul className="text-primary">
+    <div className="p-5 flex flex-col gap-5">
+        <h2 className="font-bold text-lg">Providers</h2>
+      <ul className="text-primary flex flex-row gap-5">
         {dataProviders.map((element: ProviderData, index: number) => {
-          return <li key={index}>{element.provider}</li>;
+          return <li className="px-5 py-2 rounded-full border-2 border-tertiary cursor-pointer hover:bg-tertiary transition duration-200" key={index}>{element.provider}</li>;
         })}
       </ul>
     </div>
