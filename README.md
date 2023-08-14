@@ -41,3 +41,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Repository
 [![GitHub-repo](https://github.com/Guts6667/technical_test-modeo.ai.git)
 
+
+![IMG_2EC08B7DAD1E-1](https://github.com/Guts6667/technical_test-modeo.ai/assets/76847062/b1422801-7566-4624-878d-fdb0abb95c31)
+![IMG_191321043F97-1](https://github.com/Guts6667/technical_test-modeo.ai/assets/76847062/2c86ee32-91bd-4712-9b09-47aab9d92873)
+
