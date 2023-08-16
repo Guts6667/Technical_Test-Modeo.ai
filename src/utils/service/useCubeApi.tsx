@@ -9,6 +9,8 @@ const useCubeApi = cubejs(
   }
 );
 
+
+
 const loadCubeApi = async (query: any) => {
   // Fetch data from cubejs
   const resultSet = await useCubeApi.load(query);
@@ -22,8 +24,39 @@ const loadCubeApi = async (query: any) => {
         activities: provider["datamart_daily_user_activities.activities"],
       };
     });
-    
+
   return providerData;
 };
 
 export default loadCubeApi;
+
+
+// We need to update the query to get the following data:
+// {
+//   "order": {
+//       "datamart_daily_user_activities.date": "asc"
+//     },
+//     "measures": [
+//       "datamart_daily_user_activities.activities"
+//   ],
+//   "timeDimensions": [
+//     {
+//       "dimension": "datamart_daily_user_activities.date",
+//       "granularity": "month"
+//     }
+//   ]
+//   {
+//   "order": {
+//       "datamart_daily_user_activities.activities": "desc"
+//     },
+//     "measures": [
+//       "datamart_daily_user_activities.activities"
+//     ],
+//     "timeDimensions": [
+//       {
+//         "dimension": "datamart_daily_user_activities.date"
+//   } ],
+//     "dimensions": [
+//       "datamart_daily_user_activities.provider"
+//   ] }
+// }

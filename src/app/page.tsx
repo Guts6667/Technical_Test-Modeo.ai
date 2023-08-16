@@ -5,6 +5,7 @@ import fetchData from "../utils/service/dataFetching"; // Adjust the path accord
 import { RootState } from "@/Redux/store";
 import ProviderList from "./components/ProviderList";
 import ActivityNumber from "./components/ActivityNumber";
+import LoadingSpinner from "./components/LoadingSpinner";
 /**
  *  Home page
  * @description This is the home page of the app where the data is fetched and displayed
@@ -15,10 +16,14 @@ import ActivityNumber from "./components/ActivityNumber";
 const Home: React.FC = () => {
   const dataProviders = useSelector((state: RootState) => state.providers);
   const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = React.useState(false);
   // Fetch data from cubejs and dispatch it to the store on component mount
   useEffect(() => {
     fetchData(dispatch);
-  }, []);
+    if (dataProviders.loading) {
+      setIsLoaded(true);
+    }
+  }, [isLoaded]);
 
   return (
     <React.Fragment>
@@ -31,9 +36,14 @@ const Home: React.FC = () => {
           </a>
         </span>
       </header>
-
-       <ProviderList />
-       <ActivityNumber />
+      {!dataProviders.loading ? (
+        <LoadingSpinner />
+      ) : (
+        <React.Fragment>
+          <ProviderList />
+          <ActivityNumber />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

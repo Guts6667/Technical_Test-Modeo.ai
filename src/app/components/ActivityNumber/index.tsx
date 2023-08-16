@@ -21,9 +21,6 @@ const ActivityNumber: React.FC = () => {
         title: {
           text: "ActivityNumber",
         },
-        tooltip: {
-          trigger: "axis",
-        },
         legend: {
           data: dataProviders.map((provider) => provider.provider),
         },
@@ -50,8 +47,14 @@ const ActivityNumber: React.FC = () => {
           name: provider.provider,
           type: "line",
           stack: "Total",
-          // We need to make sure that each line has a white color and the tertiary color on hover
           color: "#fff",
+          emphasis: {
+            lineStyle: {
+              color: "#f54d27",
+              width: 3,
+            },
+          },
+
           data: provider.activities,
         })),
       };
@@ -62,7 +65,7 @@ const ActivityNumber: React.FC = () => {
 
   return (
     <section className="p-5">
-      <h2 className="font-bold text-lg">ActivityNumber</h2>
+      {/* <h2 className="font-bold text-lg">ActivityNumber</h2> */}
       <div
         id="stackedLineChart"
         style={{ width: "100%", height: "500px" }}
