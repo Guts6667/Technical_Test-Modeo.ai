@@ -5,8 +5,7 @@ import { RootState, store } from "@/Redux/store";
 import ProviderList from "./components/ProviderList";
 import ActivityNumber from "./components/ActivityNumber";
 import LoadingSpinner from "./components/LoadingSpinner";
-import { fetchCubeApi } from "@/utils/service/useCubeApi";
-import loadProviderList from "@/utils/service/dataFetching";
+import { dataFetching } from "@/utils/service/dataFetching";
 
 /**
  *  Home page
@@ -21,7 +20,7 @@ const Home: React.FC = () => {
   // Fetch data from cubejs and dispatch it to the store on component mount
   useEffect(() => {
     const currentState = store.getState();
-    loadProviderList(dispatch);
+    dataFetching.loadProviderList(dispatch);
  
   }, [ dataProviders.isLoaded]);
 

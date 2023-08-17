@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import ProviderData from "@/utils/interface/providerList";
 import { setSelectedProvider } from "@/Redux/providersSlice";
+import dataFetching from "@/utils/service/dataFetching";
 
 const ProviderList: React.FC = () => {
   const dataProviders = useSelector(
@@ -16,6 +17,7 @@ const ProviderList: React.FC = () => {
 
   const selectProvider = (provider: string) => {
     dispatch(setSelectedProvider(provider));
+    dataFetching.loadActivityPerProvider(dispatch,selectedProvider);
   };
 
   return (

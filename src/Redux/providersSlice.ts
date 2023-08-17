@@ -9,14 +9,16 @@ import { createSlice } from "@reduxjs/toolkit";
 // Define a type for the slice state
 export interface ProvidersState {
   providers: ProviderList[];
-  selectedProvider: string | null;
+  selectedProvider: string ;
+  selectedProviderActivity: number;
   isLoaded: boolean;
   error: string | null;
 }
 // Define the initial state using that type
 const initialState: ProvidersState = {
   providers: [],
-  selectedProvider: null,
+  selectedProvider: '',
+  selectedProviderActivity: 0,
   isLoaded: false,
   error: null,
 };
@@ -38,25 +40,26 @@ export const providersSlice = createSlice({
           "isLoaded:",
           state.isLoaded,
           state.providers,
-          "selectedProvider:",
-          state.selectedProvider
         );
-        console.log(state.providers);
-        console.log("selectedProvider:", state.selectedProvider);
+        console.log("Provider List:", state.providers);
       } else {
         state.error = "No providers!";
       }
     },
     setSelectedProvider: (state, { payload }) => {
       state.error = null;
-      state.providers = state.providers;
       state.selectedProvider = payload;
       if (state.selectedProvider)
         console.log("Provider selected:", state.selectedProvider);
     },
+    setSelectedProviderActivity: (state, { payload }) => {
+      state.error = null;
+      state.selectedProviderActivity = payload;
+      if (state.selectedProvider)(console.log("Provider Activity:", state.selectedProvider));
+    }
   },
 });
 
-export const { setProvidersList, setSelectedProvider } = providersSlice.actions;
+export const { setProvidersList, setSelectedProvider, setSelectedProviderActivity } = providersSlice.actions;
 
 export default providersSlice.reducer;
