@@ -16,7 +16,7 @@ export interface ProvidersState {
 // Define the initial state using that type
 const initialState: ProvidersState = {
   providers: [],
-  selectedProvider: "no provider selected",
+  selectedProvider: null,
   isLoaded: false,
   error: null,
 };
@@ -43,11 +43,20 @@ export const providersSlice = createSlice({
         );
         console.log(state.providers);
         console.log("selectedProvider:", state.selectedProvider);
+      } else {
+        state.error = "No providers!";
       }
+    },
+    setSelectedProvider: (state, { payload }) => {
+      state.error = null;
+      state.providers = state.providers;
+      state.selectedProvider = payload;
+      if (state.selectedProvider)
+        console.log("Provider selected:", state.selectedProvider);
     },
   },
 });
 
-export const { setProvidersList } = providersSlice.actions;
+export const { setProvidersList, setSelectedProvider } = providersSlice.actions;
 
 export default providersSlice.reducer;
