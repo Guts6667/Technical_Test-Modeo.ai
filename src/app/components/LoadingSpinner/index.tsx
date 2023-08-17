@@ -8,6 +8,9 @@ const LoadingSpinner: React.FC = () => {
     "This shouldn't be long",
     "Please be patient.",
     "We hope you're having an amazing day!",
+    "We're almost there!",
+    "Just a few more seconds...",
+    "We're almost done!",
   ];
   useEffect(() => {
     const interval = setInterval(() => {

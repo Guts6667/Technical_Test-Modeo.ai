@@ -1,6 +1,6 @@
-import loadCubeApi from "@/utils/service/useCubeApi";
+import  { fetchCubeApi } from "@/utils/service/useCubeApi";
 import { queries } from "@/utils/service/queries";
-import { setProviders, getProviders } from "@/Redux/providersSlice";
+import { setProvidersList } from "@/Redux/providersSlice";
 
 /**
  *  Fetch data from cubejs API and dispatch it to the store
@@ -8,16 +8,15 @@ import { setProviders, getProviders } from "@/Redux/providersSlice";
  * @returns array of providers
  *
  */
-const fetchData = async (dispatch: any) => {
+const loadProviderList = async (dispatch: any) => {
   try {
     // Calls the function to fetch data from cubejs API
-    const result = await loadCubeApi(queries.activitiesPerProvider);
+    const result = await fetchCubeApi.fetchProviderList(queries.providerList);
     console.log("%cResult from fetchData: ",  "color: yellow;  font-size: 14px", result);
-    dispatch(setProviders(result));
-    dispatch(getProviders());
+    dispatch(setProvidersList(result));
   } catch (error) {
     console.error(error);
   }
 };
 
-export default fetchData;
+export default loadProviderList;

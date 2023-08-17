@@ -1,5 +1,5 @@
 import cubejs from "@cubejs-client/core";
-import ProviderData from "../interface/providerData";
+import ProviderList from "../interface/providerList"
 
 const useCubeApi = cubejs(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTA3OTMwNDN9.by1HD6M6l-g0pTEWRaXvYwsSWFdSI9VejrTdOGOodPM",
@@ -11,52 +11,22 @@ const useCubeApi = cubejs(
 
 
 
-const loadCubeApi = async (query: any) => {
+const fetchProviderList = async (query: any) => {
   // Fetch data from cubejs
   const resultSet = await useCubeApi.load(query);
   console.log("RESULT SET:", resultSet);
   // Map data to ProviderData interface and format it
-  const providerData: ProviderData[] = resultSet
+  const providerData: ProviderList[] = resultSet
     .tablePivot()
     .map((provider: any) => {
       return {
         provider: provider["datamart_daily_user_activities.provider"],
-        activities: provider["datamart_daily_user_activities.activities"],
       };
     });
 
   return providerData;
 };
 
-export default loadCubeApi;
 
+export  const fetchCubeApi =  {fetchProviderList}
 
-// We need to update the query to get the following data:
-// {
-//   "order": {
-//       "datamart_daily_user_activities.date": "asc"
-//     },
-//     "measures": [
-//       "datamart_daily_user_activities.activities"
-//   ],
-//   "timeDimensions": [
-//     {
-//       "dimension": "datamart_daily_user_activities.date",
-//       "granularity": "month"
-//     }
-//   ]
-//   {
-//   "order": {
-//       "datamart_daily_user_activities.activities": "desc"
-//     },
-//     "measures": [
-//       "datamart_daily_user_activities.activities"
-//     ],
-//     "timeDimensions": [
-//       {
-//         "dimension": "datamart_daily_user_activities.date"
-//   } ],
-//     "dimensions": [
-//       "datamart_daily_user_activities.provider"
-//   ] }
-// }

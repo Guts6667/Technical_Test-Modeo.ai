@@ -1,11 +1,13 @@
 "use client";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import fetchData from "../utils/service/dataFetching"; // Adjust the path accordingly
-import { RootState } from "@/Redux/store";
+import { RootState, store } from "@/Redux/store";
 import ProviderList from "./components/ProviderList";
 import ActivityNumber from "./components/ActivityNumber";
 import LoadingSpinner from "./components/LoadingSpinner";
+import { fetchCubeApi } from "@/utils/service/useCubeApi";
+import loadProviderList from "@/utils/service/dataFetching";
+
 /**
  *  Home page
  * @description This is the home page of the app where the data is fetched and displayed
@@ -16,14 +18,12 @@ import LoadingSpinner from "./components/LoadingSpinner";
 const Home: React.FC = () => {
   const dataProviders = useSelector((state: RootState) => state.providers);
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = React.useState(false);
   // Fetch data from cubejs and dispatch it to the store on component mount
   useEffect(() => {
-    fetchData(dispatch);
-    if (dataProviders.loading) {
-      setIsLoaded(true);
-    }
-  }, [isLoaded]);
+    const currentState = store.getState();
+    loadProviderList(dispatch);
+ 
+  }, [ dataProviders.isLoaded]);
 
   return (
     <React.Fragment>
@@ -36,7 +36,7 @@ const Home: React.FC = () => {
           </a>
         </span>
       </header>
-      {!dataProviders.loading ? (
+      {!dataProviders.isLoaded ? (
         <LoadingSpinner />
       ) : (
         <React.Fragment>

@@ -1,5 +1,6 @@
 "use client";
 
+import ProviderList from "@/utils/interface/providerList";
 /**
  * This file contains the redux slice for the providers.
  */
@@ -7,14 +8,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Define a type for the slice state
 export interface ProvidersState {
-  providers: any[];
-  loading: boolean;
+  providers: ProviderList[];
+  selectedProvider: string | null;
+  isLoaded: boolean;
   error: string | null;
 }
 // Define the initial state using that type
 const initialState: ProvidersState = {
   providers: [],
-  loading: false,
+  selectedProvider: "no provider selected",
+  isLoaded: false,
   error: null,
 };
 
@@ -24,37 +27,27 @@ export const providersSlice = createSlice({
   initialState,
   reducers: {
     // Set the providers to the state and set loading to false and error to null to indicate that the request has been completed
-    setProviders: (state, { payload }) => {
-      state.loading = false;
+    setProvidersList: (state, { payload }) => {
+      // state.isLoaded = false;
       state.error = null;
       state.providers = payload;
+      if (state.providers.length > 0) {
+        state.isLoaded = true;
+        console.log(
+          "Store updated:",
+          "isLoaded:",
+          state.isLoaded,
+          state.providers,
+          "selectedProvider:",
+          state.selectedProvider
+        );
+        console.log(state.providers);
+        console.log("selectedProvider:", state.selectedProvider);
+      }
     },
-    // Set loading to true to indicate that the request is in progress
-    fetchProvidersSuccess: (state, { payload }) => {
-      state.loading = false;
-      state.error = null;
-      state.providers = payload;
-    },
-    // Set loading to false and set error to the error message to indicate that the request has failed
-    fetchProvidersFailure: (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-      state.providers = [];
-    },
-    getProviders: (state) => {
-      state.loading = true;
-      state.error = null;
-      console.log("getProviders", state.providers);
-    },
-  
   },
 });
 
-export const {
-  setProviders,
-  fetchProvidersSuccess,
-  fetchProvidersFailure,
-  getProviders,
-} = providersSlice.actions;
+export const { setProvidersList } = providersSlice.actions;
 
 export default providersSlice.reducer;

@@ -2,14 +2,14 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
-import ProviderData from "@/utils/interface/providerData";
+import ProviderData from "@/utils/interface/providerList";
 
 const ProviderList: React.FC = () => {
   const dataProviders = useSelector(
     (state: RootState) => state.providers.providers
   );
 
-  console.log("Here's the current state of the store: ", dataProviders);
+
   return (
     <div className="p-5 flex flex-col gap-5">
         <h2 className="font-bold text-lg">Providers</h2>
