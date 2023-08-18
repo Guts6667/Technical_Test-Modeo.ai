@@ -27,27 +27,33 @@ const fetchProviderList = async (query: any) => {
 };
 
 const fetchActivityPerProvider = async (query: any, provider: string) => {
-  console.log("hi");
-  const resultSet = await useCubeApi.load(query);
-  console.log("RESULT SET:", resultSet);
 
-  const providerActivity = resultSet
-    .tablePivot()
-    .filter(
-      (providerData: any) =>
-        providerData["datamart_daily_user_activities.provider"] === provider
-    )
-    .map((providerData: any) => {
-      if (
-        providerData["datamart_daily_user_activities.provider"] === provider
-      ) {
-        return {
-          activities: parseInt(providerData["datamart_daily_user_activities.activities"]),
-        };
-      }
+  query.filters = query.filters || [];
+  query.filters.push({
+    dimension: "datamart_daily_user_activities.provider",
+    operator: "equals",
+    values: [provider],
+   
+  });
+  try {
+    const resultSet = await useCubeApi.load(query);
+    console.log("RESULT SET:", resultSet);
+
+    // Map data to your desired format
+    const providerActivity = resultSet.tablePivot().map((dataItem: any) => {
+      return {
+        provider: dataItem["datamart_daily_user_activities.provider"],
+        // You might need to adjust this property access based on your actual response
+        activities: dataItem["datamart_daily_user_activities.activities"],
+      };
     });
 
-  return providerActivity;
+    console.log("Provider Activity:", providerActivity[0].activities);
+    return providerActivity;
+  } catch (error) {
+    console.error(error);
+    return []; // Return an empty array or handle the error appropriately
+  }
 };
 const fetchCubeApi = { fetchProviderList, fetchActivityPerProvider };
 

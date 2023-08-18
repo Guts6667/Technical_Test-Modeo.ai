@@ -19,10 +19,8 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   // Fetch data from cubejs and dispatch it to the store on component mount
   useEffect(() => {
-    const currentState = store.getState();
     dataFetching.loadProviderList(dispatch);
- 
-  }, [ dataProviders.isLoaded]);
+  }, [dataProviders.isLoaded]);
 
   return (
     <React.Fragment>
@@ -40,7 +38,7 @@ const Home: React.FC = () => {
       ) : (
         <React.Fragment>
           <ProviderList />
-          <ActivityNumber />
+          {/* <ActivityNumber /> */}
         </React.Fragment>
       )}
     </React.Fragment>

@@ -1,5 +1,6 @@
 "use client";
 
+import SelectedProviderActivity from "@/utils/interface/providerActivity";
 import ProviderList from "@/utils/interface/providerList";
 /**
  * This file contains the redux slice for the providers.
@@ -9,16 +10,16 @@ import { createSlice } from "@reduxjs/toolkit";
 // Define a type for the slice state
 export interface ProvidersState {
   providers: ProviderList[];
-  selectedProvider: string ;
-  selectedProviderActivity: number;
+  selectedProvider: string;
+  selectedProviderActivity: SelectedProviderActivity[];
   isLoaded: boolean;
   error: string | null;
 }
 // Define the initial state using that type
 const initialState: ProvidersState = {
   providers: [],
-  selectedProvider: '',
-  selectedProviderActivity: 0,
+  selectedProvider: "no provider selected",
+  selectedProviderActivity: [],
   isLoaded: false,
   error: null,
 };
@@ -39,9 +40,9 @@ export const providersSlice = createSlice({
           "Store updated:",
           "isLoaded:",
           state.isLoaded,
-          state.providers,
+          state.providers
         );
-        console.log("Provider List:", state.providers);
+        console.log("Store Provider List:", state.providers);
       } else {
         state.error = "No providers!";
       }
@@ -49,17 +50,26 @@ export const providersSlice = createSlice({
     setSelectedProvider: (state, { payload }) => {
       state.error = null;
       state.selectedProvider = payload;
-      if (state.selectedProvider)
-        console.log("Provider selected:", state.selectedProvider);
+      console.log("Store Provider selected:", state.selectedProvider);
     },
     setSelectedProviderActivity: (state, { payload }) => {
       state.error = null;
       state.selectedProviderActivity = payload;
-      if (state.selectedProvider)(console.log("Provider Activity:", state.selectedProvider));
-    }
+      console.log("Store Provider Activity:", state.selectedProviderActivity);
+    },
+    resetSelectedProvidersDatas: (state) => {
+      state.providers = state.providers;
+      state.selectedProvider = initialState.selectedProvider;
+      state.selectedProviderActivity = initialState.selectedProviderActivity;
+    },
   },
 });
 
-export const { setProvidersList, setSelectedProvider, setSelectedProviderActivity } = providersSlice.actions;
+export const {
+  setProvidersList,
+  setSelectedProvider,
+  setSelectedProviderActivity,
+  resetSelectedProvidersDatas,
+} = providersSlice.actions;
 
 export default providersSlice.reducer;

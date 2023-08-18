@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import ProviderData from "@/utils/interface/providerList";
-import { setSelectedProvider } from "@/Redux/providersSlice";
+import { resetSelectedProvidersDatas, setSelectedProvider } from "@/Redux/providersSlice";
 import dataFetching from "@/utils/service/dataFetching";
 
 const ProviderList: React.FC = () => {
@@ -16,8 +16,11 @@ const ProviderList: React.FC = () => {
   const dispatch = useDispatch();
 
   const selectProvider = (provider: string) => {
-    dispatch(setSelectedProvider(provider));
-    dataFetching.loadActivityPerProvider(dispatch,selectedProvider);
+    
+    if (provider !== "") {
+      dispatch(setSelectedProvider(provider));
+      dataFetching.loadActivityPerProvider(dispatch, provider);
+    }
   };
 
   return (
