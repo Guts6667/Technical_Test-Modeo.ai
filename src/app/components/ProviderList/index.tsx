@@ -3,24 +3,29 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import ProviderData from "@/utils/interface/providerList";
-import { resetSelectedProvidersDatas, setSelectedProvider } from "@/Redux/providersSlice";
+import {
+  resetSelectedProvidersDatas,
+  setSelectedProvider,
+} from "@/Redux/providersSlice";
 import dataFetching from "@/utils/service/dataFetching";
 
 const ProviderList: React.FC = () => {
+  const [previousProvider, setPreviousProvider] = React.useState<string>("");
   const dataProviders = useSelector(
     (state: RootState) => state.providers.providers
   );
   const selectedProvider = useSelector(
     (state: RootState) => state.providers.selectedProvider
   );
+  const selectedProviderActivity = useSelector(
+    (state: RootState) => state.providers.selectedProviderActivity
+  );
+  console.log("Selected Provider Activity:", selectedProviderActivity);
   const dispatch = useDispatch();
 
   const selectProvider = (provider: string) => {
-    
-    if (provider !== "") {
-      dispatch(setSelectedProvider(provider));
-      dataFetching.loadActivityPerProvider(dispatch, provider);
-    }
+    // dispatch(resetSelectedProvidersDatas());·
+    dataFetching.loadActivityPerProvider(dispatch, provider);
   };
 
   return (

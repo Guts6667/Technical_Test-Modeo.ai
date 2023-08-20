@@ -6,6 +6,7 @@ import ProviderList from "./components/ProviderList";
 import ActivityNumber from "./components/ActivityNumber";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { dataFetching } from "@/utils/service/dataFetching";
+import BarChart from "./components/BarChartPerProvider";
 
 /**
  *  Home page
@@ -16,6 +17,9 @@ import { dataFetching } from "@/utils/service/dataFetching";
  */
 const Home: React.FC = () => {
   const dataProviders = useSelector((state: RootState) => state.providers);
+  const selectedProviderActivity = useSelector(
+    (state: RootState) => state.providers.selectedProviderActivity
+  );
   const dispatch = useDispatch();
   // Fetch data from cubejs and dispatch it to the store on component mount
   useEffect(() => {
@@ -38,7 +42,8 @@ const Home: React.FC = () => {
       ) : (
         <React.Fragment>
           <ProviderList />
-          {/* <ActivityNumber /> */}
+          {selectedProviderActivity.length > 0 ? <ActivityNumber /> : ""}
+          {selectedProviderActivity.length > 0 ? <BarChart /> : ""}
         </React.Fragment>
       )}
     </React.Fragment>

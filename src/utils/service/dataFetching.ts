@@ -1,5 +1,9 @@
 import { queries } from "@/utils/service/queries";
-import { setProvidersList, setSelectedProvider, setSelectedProviderActivity } from "@/Redux/providersSlice";
+import {
+  setProvidersList,
+  setSelectedProvider,
+  setSelectedProviderActivity,
+} from "@/Redux/providersSlice";
 import fetchCubeApi from "./useCubeApi";
 
 /**
@@ -24,7 +28,7 @@ const loadProviderList = async (dispatch: any) => {
 };
 
 const loadActivityPerProvider = async (dispatch: any, provider: string) => {
-  console.log("loadActivityPerProvider", provider);
+
   try {
     // Calls the function to fetch data from cubejs API
     const result = await fetchCubeApi.fetchActivityPerProvider(

@@ -1,76 +1,80 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import * as echarts from "echarts";
 
 const ActivityNumber: React.FC = () => {
-  const dataProviders = useSelector(
-    (state: RootState) => state.providers.providers
+  const selectedProviderActivity = useSelector(
+    (state: RootState) => state.providers.selectedProviderActivity
   );
+  selectedProviderActivity.map((element) => console.log(element.activities));
+  console.log("Activity:", selectedProviderActivity);
+  // We need to build a responsive line chart using Apache eCharts
+  const option = {
+    title: {
+      text: "Provider Activities",
+      // Let's change the color of the title
+      textStyle: {
+        color: "white",
+      },
+    },
+    xAxis: {
+      type: "category",
+      data: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "Septembre",
+        "October",
+        "November",
+        "December",
+      ],
+    },
+    yAxis: {
+      type: "value",
+    },
 
+    tooltip: {
+      // Add tooltip configuration here
+      trigger: "axis", // Show tooltip when hovering over data points
+      formatter: "{b}: {c}", // Format of the tooltip content
+    },
+
+    series: [
+      {
+        data: selectedProviderActivity.map((element) => element.activities),
+        type: "line",
+      },
+    ],
+  };
+  // Let's make the chart resize when the window resizes
+  window.addEventListener("resize", () => {
+    const chartContainer = document.getElementById("activity-number");
+    const chart = echarts.init(chartContainer);
+    chart.resize();
+  });
   useEffect(() => {
-    if (dataProviders.length > 0) {
-      const stackedLineChart = echarts.init(
-        document.getElementById("stackedLineChart") as HTMLElement,
-        "dark"
-      );
+    const chartContainer = document.getElementById("activity-number");
+    const chart = echarts.init(chartContainer);
+    chart.setOption(option); // option is the chart configuration you defined
 
-      const option: echarts.EChartsOption = {
-        // We need to make sure that each line has a different color
-        title: {
-          text: "ActivityNumber",
-        },
-        legend: {
-          data: dataProviders.map((provider) => provider.provider),
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true,
-        },
-        toolbox: {
-          feature: {
-            saveAsImage: {},
-          },
-        },
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: dataProviders.map((provider) => ({
-          name: provider.provider,
-          type: "line",
-          stack: "Total",
-          color: "#fff",
-          emphasis: {
-            lineStyle: {
-              color: "#f54d27",
-              width: 3,
-            },
-          },
-
-          data: provider.activities,
-        })),
-      };
-
-      stackedLineChart.setOption(option);
-    }
-  }, [dataProviders]);
+    // Clean up the chart instance when the component unmounts
+    return () => {
+      chart.dispose();
+    };
+  }, [option]);
 
   return (
-    <section className="p-5">
-      {/* <h2 className="font-bold text-lg">ActivityNumber</h2> */}
-      <div
-        id="stackedLineChart"
-        style={{ width: "100%", height: "500px" }}
-      ></div>
-    </section>
+    <div
+      id="activity-number"
+      className=" w-full h-64 bg-white rounded-lg shadow-md"
+    ></div>
   );
 };
 

@@ -1,9 +1,8 @@
-class SelectedProviderActivity  {
-  constructor(public selectedProvider: string, public activity: string) {
+class SelectedProviderActivity {
+  constructor(public selectedProvider: string, public activities: string) {
     this.selectedProvider = selectedProvider;
-    this.activity = activity;
+    this.activities = activities;
   }
-
-}; 
+}
 
 export default SelectedProviderActivity;

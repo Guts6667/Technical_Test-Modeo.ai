@@ -27,19 +27,20 @@ const fetchProviderList = async (query: any) => {
 };
 
 const fetchActivityPerProvider = async (query: any, provider: string) => {
-
   query.filters = query.filters || [];
+
   query.filters.push({
     dimension: "datamart_daily_user_activities.provider",
     operator: "equals",
     values: [provider],
-   
   });
   try {
     const resultSet = await useCubeApi.load(query);
     console.log("RESULT SET:", resultSet);
 
-    // Map data to your desired format
+    // Map data to your desired format;
+    console.log("Provider:", provider);
+
     const providerActivity = resultSet.tablePivot().map((dataItem: any) => {
       return {
         provider: dataItem["datamart_daily_user_activities.provider"],
