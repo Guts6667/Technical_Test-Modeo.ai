@@ -73,7 +73,7 @@ const ActivityNumber: React.FC = () => {
   return (
     <div
       id="activity-number"
-      className=" w-full h-64 bg-white rounded-lg shadow-md"
+      className=" rounded-lg shadow-md w-full h-[400px]"
     ></div>
   );
 };

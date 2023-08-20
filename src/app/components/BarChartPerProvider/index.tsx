@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import { useSelector } from "react-redux";
@@ -88,9 +89,9 @@ const BarChart: React.FC = () => {
 
   return (
     <div
-      className="w-full h-64 bg-white rounded-lg shadow-md"
+      className="w-full h-64 bg-white rounded-lg shadow-md w-full h-[400px]"
       id="main"
-      style={{ width: "100%", height: "400px" }}
+     
     />
   );
 };

@@ -7,6 +7,7 @@ import ActivityNumber from "./components/ActivityNumber";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { dataFetching } from "@/utils/service/dataFetching";
 import BarChart from "./components/BarChartPerProvider";
+import TotalActivity from "./components/TotalActivity";
 
 /**
  *  Home page
@@ -42,8 +43,14 @@ const Home: React.FC = () => {
       ) : (
         <React.Fragment>
           <ProviderList />
-          {selectedProviderActivity.length > 0 ? <ActivityNumber /> : ""}
-          {selectedProviderActivity.length > 0 ? <BarChart /> : ""}
+          <section className="flex flex-col">
+            <div className="flex sm:flex-row flex-col gap-3 ">
+              {selectedProviderActivity.length > 0 ? <ActivityNumber /> : ""}
+              {selectedProviderActivity.length > 0 ? <BarChart /> : ""}
+            </div>
+
+            {selectedProviderActivity.length > 0 ? <TotalActivity /> : ""}
+          </section>
         </React.Fragment>
       )}
     </React.Fragment>
